@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+    <head>
+        <title>QUnit</title>
+        <meta charset="utf-8"/>
+        <link type="text/css" rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.12.0.css"/>
+    </head>
+    <body>
+        <div id="qunit"></div>
+        <div id="qunit-fixture">
+            <header>Header</header>
+
+            <div id="content">
+                <div id="wrapper">
+                    <span id="foo">foo</span>
+                    <span id="bar">bar</span>
+                    <span id="baz">baz</span>
+                </div>
+
+                <ul id="list" data-test="abc">
+                    <li id="item-a">A</li>
+                    <li id="item-b">B</li>
+                    <li id="item-c">C</li>
+                    <li id="item-d">D</li>
+                    <li id="item-e">E</li>
+                    <li id="item-f">F</li>
+                    <li id="item-g">G</li>
+                </ul>
+
+                <table id="table">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>URL</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Google</td>
+                        <td><a href="http://www.google.com" target="_blank" id="link-google">http://www.google.com</a></td>
+                    </tr>
+                    <tr>
+                        <td>Yahoo!</td>
+                        <td><a href="http://www.yahoo.com" target="_blank" id="link-yahoo">http://www.yahoo.com</a></td>
+                    </tr>
+                    <tr>
+                        <td>Bing</td>
+                        <td><a href="http://www.bing.com" target="_blank" id="link-bing">http://www.bing.com</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <footer>Footer</footer>
+        </div>
+        <script src="http://code.jquery.com/qunit/qunit-1.12.0.js"></script>
+        <script src="../lib/mootools.js"></script>
+        <script src="../lib/sizzle.js"></script>
+        <script src="../src/sickle.js"></script>
+        <script src="tests.js"></script>
+    </body>
+</html>
