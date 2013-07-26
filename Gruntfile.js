@@ -3,10 +3,14 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-testem');
 
     grunt.initConfig({
         jshint: {
             all: ['Gruntfile.js', 'src/sickle.js']
+        },
+        testem: {
+            test_page: 'test/qunit.html'
         },
         uglify: {
             my_target: {
@@ -24,6 +28,6 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('default', ['jshint']);
+    grunt.registerTask('default', ['jshint', 'testem']);
     grunt.registerTask('publish', ['uglify', 'copy']);
 };

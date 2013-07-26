@@ -9,12 +9,13 @@
         "url": "https://github.com/mzabriskie/sickle.git"
     },
     "scripts": {
-        "test": "grunt jshint"
+        "test": "grunt jshint testem"
     },
     "devDependencies": {
         "grunt": "~0.4.0",
         "grunt-contrib-copy": "0.4.1",
         "grunt-contrib-jshint": "0.4.3",
-        "grunt-contrib-uglify": "0.2.2"
+        "grunt-contrib-uglify": "0.2.2",
+        "grunt-testem": "0.3.6"
     }
 }
