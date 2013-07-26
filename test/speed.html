@@ -16,12 +16,16 @@
                 font-size:14px;
             }
 
+            input[type=number] {
+                width:45px;
+            }
+
             fieldset {
                 border:1px solid #33bbff;
                 border-radius:3px;
                 float:left;
                 width:49%;
-                height:500px;
+                height:515px;
                 padding:10px;
             }
             fieldset legend {
@@ -52,7 +56,7 @@
             <legend>Sandbox</legend>
             <header>Header</header>
 
-            <div>
+            <div id="content">
                 <div id="wrapper">
                     <span id="foo">foo</span>
                     <span id="bar">bar</span>
@@ -98,7 +102,9 @@
 
         <fieldset>
             <legend>Results</legend>
-            <button id="submit">Benchmark</button> <span id="average"></span>
+            Run each query <input type="number" min="1" max="100" value="100" id="query-count"/> times
+            <button id="submit">Benchmark</button><br/>
+            <span id="average"></span>
             <ul id="output"></ul>
         </fieldset>
 
@@ -108,17 +114,25 @@
         <script type="text/javascript" src="../src/sickle.js"></script>
         <script>
             (function () {
-                var LOOP_MAX = 100,
-                    average = [],
-                    count = 0,
+                var LOOP_MAX, lastQueryCount, average, count,
                     label = document.getElementById('average'),
                     output = document.getElementById('output');
+
+                document.getElementById('query-count').value = localStorage ? localStorage.getItem('queryCount') || 100 : 100;
 
                 function benchmark() {
                     var start, end, avg = 0;
 
                     output.innerHTML = '';
+                    LOOP_MAX = document.getElementById('query-count').value;
+                    if (localStorage) {
+                        localStorage.setItem('queryCount', LOOP_MAX);
+                    }
+                    if (LOOP_MAX != lastQueryCount) {
+                        average = [];
+                    }
                     count = 0;
+                    lastQueryCount = LOOP_MAX;
 
                     start = Date.now();
 
@@ -128,10 +142,10 @@
                     time('getElement', function () { return document.getElement('table'); });
                     time('getElements', function () { return document.getElements('ul[data-test=abc] li'); });
 
-                    time('getPrevious', function () { return $$('#list li:nth-of-type(4)')[0].getPrevious(); });
-                    time('getAllPrevious', function () { return $$('#list li:nth-of-type(4)')[0].getAllPrevious(); });
-                    time('getNext', function () { return $$('#list li:nth-of-type(4)')[0].getNext(); });
-                    time('getAllNext', function () { return $$('#list li:nth-of-type(4)')[0].getAllNext(); });
+                    time('getPrevious', function () { return $$('#list li:nth-of-type(4)')[0].getPrevious('li'); });
+                    time('getAllPrevious', function () { return $$('#list li:nth-of-type(4)')[0].getAllPrevious('li'); });
+                    time('getNext', function () { return $$('#list li:nth-of-type(4)')[0].getNext('li'); });
+                    time('getAllNext', function () { return $$('#list li:nth-of-type(4)')[0].getAllNext('li'); });
                     time('getFirst', function () { return $('list').getFirst('li'); });
                     time('getLast', function () { return $('list').getLast('li'); });
                     time('getParent', function () { return $('list').getFirst('li').getParent('body'); });
@@ -146,8 +160,8 @@
                     average.push(end - start);
                     average.forEach(function (a) { avg += a; });
                     label.innerHTML = 'Elapsed: ' + (end - start) + 'ms, ' +
-                                        'Queries: ' + count + ', ' +
                                         'Average: ' + Math.round(avg / average.length) + 'ms, ' +
+                                        'Queries: ' + count + ', ' +
                                         'Runs: ' + average.length;
                 }
 
