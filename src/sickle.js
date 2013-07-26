@@ -49,18 +49,18 @@
         },
 
         $$: function (selector) {
-            return new Elements(Sizzle(scrub(selector), document));
+            return new Elements(new Sizzle(scrub(selector), document));
         }
     });
 
     Array.forEach([Element, Document], function (clss) {
         clss.implement({
             getElement: function (expression) {
-                return wrap(Sizzle(scrub(expression), this)[0]);
+                return wrap(new Sizzle(scrub(expression), this)[0]);
             },
 
             getElements: function (expression) {
-                return new Elements(Sizzle(scrub(expression), this));
+                return new Elements(new Sizzle(scrub(expression), this));
             }
         });
     });
@@ -68,7 +68,7 @@
     Element.implement({
         getPrevious: function (selector) {
             var node = this;
-            while (node = node.previousSibling) {
+            while ((node = node.previousSibling) !== null) {
                 if (node.nodeType !== 1) continue;
                 if (match(node, selector)) return wrap(node);
             }
@@ -79,7 +79,7 @@
         getAllPrevious: function (selector) {
             var nodes = [],
                 node = this;
-            while (node = node.previousSibling) {
+            while ((node = node.previousSibling) !== null) {
                 if (node.nodeType !== 1) continue;
                 if (match(node, selector)) nodes.push(wrap(node));
             }
@@ -89,7 +89,7 @@
 
         getNext: function (selector) {
             var node = this;
-            while (node = node.nextSibling) {
+            while ((node = node.nextSibling) !== null) {
                 if (node.nodeType !== 1) continue;
                 if (match(node, selector)) return wrap(node);
             }
@@ -100,7 +100,7 @@
         getAllNext: function (selector) {
             var nodes = [],
                 node = this;
-            while (node = node.nextSibling) {
+            while ((node = node.nextSibling) !== null) {
                 if (node.nodeType !== 1) continue;
                 if (match(node, selector)) nodes.push(wrap(node));
             }
@@ -135,7 +135,7 @@
 
         getParent: function (selector) {
             var node = this;
-            while (node = node.parentNode) {
+            while ((node = node.parentNode) !== null) {
                 if (node === document) break;
                 if (match(node, selector)) return wrap(node);
             }
@@ -145,7 +145,7 @@
         getParents: function (selector) {
             var parents = [],
                 node = this;
-            while (node = node.parentNode) {
+            while ((node = node.parentNode) !== null) {
                 if (node === document) break;
                 if (match(node, selector)) parents.push(wrap(node));
             }
@@ -169,7 +169,7 @@
         },
 
         getElementById: function (id) {
-            return wrap(Sizzle('#' + id, this)[0]);
+            return wrap(new Sizzle('#' + id, this)[0]);
         },
 
         match: function (expression) {
