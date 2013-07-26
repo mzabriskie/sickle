@@ -48,11 +48,11 @@ QUnit.test('getElements', function (assert) {
 // Element prototype
 QUnit.module('element prototype');
 QUnit.test('getPrevious', function (assert) {
-    assert.equal(document.getElementById('item-d').getPrevious(), document.getElementById('item-c'), 'element.getPrevious should find the correct element');
+    assert.equal(document.getElementById('item-d').getPrevious('li'), document.getElementById('item-c'), 'element.getPrevious should find the correct element');
 });
 
 QUnit.test('getAllPrevious', function (assert) {
-    var result = document.getElementById('item-d').getAllPrevious();
+    var result = document.getElementById('item-d').getAllPrevious('li');
     assert.equal(result.length, 3, 'element.getAllPrevious should find all matching elements');
     assert.equal(result[0], document.getElementById('item-c'), 'element.getAllPrevious should find the correct element');
     assert.equal(result[1], document.getElementById('item-b'), 'element.getAllPrevious should find the correct element');
@@ -60,11 +60,11 @@ QUnit.test('getAllPrevious', function (assert) {
 });
 
 QUnit.test('getNext', function (assert) {
-    assert.equal(document.getElementById('item-d').getNext(), document.getElementById('item-e'), 'element.getNext should find the correct element');
+    assert.equal(document.getElementById('item-d').getNext('li'), document.getElementById('item-e'), 'element.getNext should find the correct element');
 });
 
 QUnit.test('getAllNext', function (assert) {
-    var result = document.getElementById('item-d').getAllNext();
+    var result = document.getElementById('item-d').getAllNext('li');
     assert.equal(result.length, 3, 'element.getAllNext should find all matching elements');
     assert.equal(result[0], document.getElementById('item-e'), 'element.getAllNext should find the correct element');
     assert.equal(result[1], document.getElementById('item-f'), 'element.getAllNext should find the correct element');
@@ -94,7 +94,7 @@ QUnit.test('getParents', function (assert) {
 });
 
 QUnit.test('getSiblings', function (assert) {
-    var result = document.getElementById('item-d').getSiblings();
+    var result = document.getElementById('item-d').getSiblings('li');
     assert.equal(result.length, 6, 'element.getSiblings should find all matching elements');
     assert.equal(result[0], document.getElementById('item-e'), 'element.getSiblings should find the correct element');
     assert.equal(result[1], document.getElementById('item-f'), 'element.getSiblings should find the correct element');
