@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Sickle</title>
+        <meta charset="utf-8"/>
+
+        <style type="text/css">
+            * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+
+            body {
+                color:#222222;
+                font-family:"Lucida Grande","Tahoma","Verdana","Arial",sans-serif;
+            }
+
+            body, button {
+                font-size:14px;
+            }
+
+            fieldset {
+                border:1px solid #33bbff;
+                border-radius:3px;
+                float:left;
+                width:49%;
+                height:500px;
+                padding:10px;
+            }
+            fieldset legend {
+                color:#002233;
+                font-weight:bold;
+            }
+
+            #output {
+                margin:10px;
+                padding:0;
+            }
+            #output li {
+                list-style:none;
+                margin:1px;
+                padding:3px;
+                border-radius:3px;
+                background-color:#cceeff;
+                border:1px solid #99ddff;
+            }
+            #average {
+                white-space:nowrap;
+            }
+        </style>
+    </head>
+    <body>
+
+        <fieldset>
+            <legend>Sandbox</legend>
+            <header>Header</header>
+
+            <div>
+                <div id="wrapper">
+                    <span id="foo">foo</span>
+                    <span id="bar">bar</span>
+                    <span id="baz">baz</span>
+                </div>
+
+                <ul id="list" data-test="abc">
+                    <li id="item-a">A</li>
+                    <li id="item-b">B</li>
+                    <li id="item-c">C</li>
+                    <li id="item-d">D</li>
+                    <li id="item-e">E</li>
+                    <li id="item-f">F</li>
+                    <li id="item-g">G</li>
+                </ul>
+
+                <table id="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>URL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Google</td>
+                            <td><a href="http://www.google.com" target="_blank" id="link-google">http://www.google.com</a></td>
+                        </tr>
+                        <tr>
+                            <td>Yahoo!</td>
+                            <td><a href="http://www.yahoo.com" target="_blank" id="link-yahoo">http://www.yahoo.com</a></td>
+                        </tr>
+                        <tr>
+                            <td>Bing</td>
+                            <td><a href="http://www.bing.com" target="_blank" id="link-bing">http://www.bing.com</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <footer>Footer</footer>
+        </fieldset>
+
+        <fieldset>
+            <legend>Results</legend>
+            <button id="submit">Benchmark</button> <span id="average"></span>
+            <ul id="output"></ul>
+        </fieldset>
+
+
+        <script type="text/javascript" src="../lib/mootools.js"></script>
+        <script type="text/javascript" src="../lib/sizzle.js"></script>
+        <script type="text/javascript" src="../src/sickle.js"></script>
+        <script>
+            (function () {
+                var LOOP_MAX = 100,
+                    average = [],
+                    count = 0,
+                    label = document.getElementById('average'),
+                    output = document.getElementById('output');
+
+                function benchmark() {
+                    var start, end, avg = 0;
+
+                    output.innerHTML = '';
+                    count = 0;
+
+                    start = Date.now();
+
+                    time('$', function () { return $('wrapper'); });
+                    time('$$', function () { return $$('table tbody tr td a[href*=google]'); });
+
+                    time('getElement', function () { return document.getElement('table'); });
+                    time('getElements', function () { return document.getElements('ul[data-test=abc] li'); });
+
+                    time('getPrevious', function () { return $$('#list li:nth-of-type(4)')[0].getPrevious(); });
+                    time('getAllPrevious', function () { return $$('#list li:nth-of-type(4)')[0].getAllPrevious(); });
+                    time('getNext', function () { return $$('#list li:nth-of-type(4)')[0].getNext(); });
+                    time('getAllNext', function () { return $$('#list li:nth-of-type(4)')[0].getAllNext(); });
+                    time('getFirst', function () { return $('list').getFirst('li'); });
+                    time('getLast', function () { return $('list').getLast('li'); });
+                    time('getParent', function () { return $('list').getFirst('li').getParent('body'); });
+                    time('getParents', function () { return $('list').getFirst('li').getParents(); });
+                    time('getSiblings', function () { return $$('#list li:nth-of-type(4)')[0].getSiblings('li'); });
+                    time('getChildren', function () { return $('list').getChildren('li'); });
+                    time('getElementById', function () { return $('wrapper').getElementById('bar'); });
+                    time('match', function () { return $('list').match('[data-test]'); });
+
+                    end = Date.now();
+
+                    average.push(end - start);
+                    average.forEach(function (a) { avg += a; });
+                    label.innerHTML = 'Elapsed: ' + (end - start) + 'ms, ' +
+                                        'Queries: ' + count + ', ' +
+                                        'Average: ' + Math.round(avg / average.length) + 'ms, ' +
+                                        'Runs: ' + average.length;
+                }
+
+                function time(message, callback) {
+                    var end, start = Date.now();
+
+                    for (var i=0; i<LOOP_MAX; i++) {
+                        callback();
+                        count++;
+                    }
+
+                    end = Date.now();
+
+                    output.appendChild(new Element('li', {text: (end - start) + 'ms - ' + message}));
+                }
+
+                document.getElementById('submit').onclick=benchmark;
+
+                setTimeout(benchmark, 0);
+            })();
+        </script>
+    </body>
+</html>
