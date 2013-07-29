@@ -49,7 +49,19 @@
         },
 
         $$: function (selector) {
-            return new Elements(new Sizzle(scrub(selector), document));
+            var result = [];
+
+            switch(typeOf(selector)) {
+                case 'string':
+                    result = new Elements(new Sizzle(scrub(selector), document));
+                    break;
+
+                case 'element':
+                    result.push($(selector));
+                    break;
+            }
+
+            return result;
         }
     });
 

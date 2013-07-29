@@ -123,3 +123,18 @@ QUnit.test('getElementById', function (assert) {
 QUnit.test('match', function (assert) {
     assert.ok(document.getElementById('list').match('[data-test]'), 'element.match should be okay');
 });
+
+// Issue verification
+QUnit.module('issue verification');
+QUnit.test('element selector', function (assert) {
+    var error = false,
+        result;
+    try {
+        result = $$(document.getElementById('wrapper'));
+    } catch (e) {
+        error = true;
+    }
+    assert.equal(error, false, 'Using an element selector should not throw an error');
+    assert.equal(result.length, 1, 'Using an element selector should return the element');
+    assert.equal(result[0], document.getElementById('wrapper'), 'Using an element selector should return the element');
+});
