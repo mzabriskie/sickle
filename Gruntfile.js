@@ -3,16 +3,16 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-include-replace');
-    grunt.loadNpmTasks('grunt-testem');
 
     grunt.initConfig({
         jshint: {
             all: ['Gruntfile.js', 'src/sickle.js']
         },
-        testem: {
-            test_page: 'test/qunit.html'
+        qunit: {
+            all: ['test/qunit.html']
         },
         uglify: {
             main: {
@@ -46,8 +46,8 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('qunit', ['testem']);
-    grunt.registerTask('default', ['jshint', 'publish', 'templates']);
+    grunt.registerTask('test', ['templates', 'jshint', 'qunit']);
+    grunt.registerTask('default', ['test', 'publish']);
     grunt.registerTask('publish', ['uglify', 'copy:dist']);
     grunt.registerTask('templates', ['includereplace', 'copy:tpl', 'clean:tpl']);
 };
