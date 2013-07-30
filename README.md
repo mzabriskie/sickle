@@ -1,4 +1,4 @@
-sickle
+sickle [![Build Status](https://travis-ci.org/mzabriskie/sickle.png?branch=master)](https://travis-ci.org/mzabriskie/sickle)
 ======
 
 Improves MooTools' performance by using Sizzle instead of Slick
