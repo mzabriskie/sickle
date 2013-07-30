@@ -64,7 +64,7 @@ There are still some optimizations to be made for older versions of IE. Although
 ## Installing
 
 - Download [Sizzle](http://sizzlejs.com)
-- Download either [Sickle](https://raw.github.com/mzabriskie/sickle/master/dist/sickle.js) or [Sickle minified](https://raw.github.com/mzabriskie/sickle/master/dist/sickle.min.js)
+- Download [Sickle](https://raw.github.com/mzabriskie/sickle/master/dist/sickle.js) or [Sickle minified](https://raw.github.com/mzabriskie/sickle/master/dist/sickle.min.js)
 - Include them immediately after you include [MooTools](http://mootools.net)
 
 ```html
@@ -72,6 +72,8 @@ There are still some optimizations to be made for older versions of IE. Although
 <script src="js/sizzle.js"></script>
 <script src="js/sickle.js"></script>
 ```
+
+No further code changes are required. Sickle overrides the MooTools methods that tie into Slick. This allows the API to remain the same, only what's happening under the hood changes.
 
 ## License
 
