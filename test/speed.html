@@ -16,7 +16,7 @@
                 font-size:14px;
             }
 
-            input[type=number] {
+            #query-count {
                 width:45px;
             }
 
@@ -102,7 +102,7 @@
 
         <fieldset>
             <legend>Results</legend>
-            Run each query <input type="number" min="1" max="100" value="100" id="query-count"/> times
+            Run each query <input type="number" min="1" max="100" id="query-count"/> times
             <button id="submit">Benchmark</button><br/>
             <span id="average"></span>
             <ul id="output"></ul>
