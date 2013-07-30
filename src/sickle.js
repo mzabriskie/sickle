@@ -23,7 +23,23 @@
     }
 
     function match(el, selector) {
-        return !selector || Sizzle.matchesSelector(el, scrub(selector));
+        var match = false;
+
+        switch(typeOf(selector)) {
+            case 'null':
+                match = true;
+                break;
+
+            case 'string':
+                match = Sizzle.matchesSelector(el, scrub(selector));
+                break;
+
+            case 'element':
+                match = el === selector;
+                break;
+        }
+
+        return match;
     }
 
     var RX_ATTR = /\[(.*?)=([^'"].*?[^'"])\]/g;
@@ -57,7 +73,7 @@
                     break;
 
                 case 'element':
-                    result.push($(selector));
+                    result.push(wrap(selector));
                     break;
             }
 
@@ -67,12 +83,48 @@
 
     Array.forEach([Element, Document], function (clss) {
         clss.implement({
-            getElement: function (expression) {
-                return wrap(new Sizzle(scrub(expression), this)[0]);
+            getElement: function (selector) {
+                var result = null;
+
+                switch(typeOf(selector)) {
+                    case 'string':
+                        result = wrap(new Sizzle(scrub(selector), this)[0]);
+                        break;
+
+                    case 'element':
+                        var node = selector;
+                        while ((node = node.parentNode) !== null) {
+                            if (node === this) {
+                                result = wrap(selector);
+                                break;
+                            }
+                        }
+                        break;
+                }
+
+                return result;
             },
 
-            getElements: function (expression) {
-                return new Elements(new Sizzle(scrub(expression), this));
+            getElements: function (selector) {
+                var result = [];
+
+                switch(typeOf(selector)) {
+                    case 'string':
+                        result = new Elements(new Sizzle(scrub(selector), this));
+                        break;
+
+                    case 'element':
+                        var node = selector;
+                        while ((node = node.parentNode) !== null) {
+                            if (node === this) {
+                                result.push(wrap(selector));
+                                break;
+                            }
+                        }
+                        break;
+                }
+
+                return result;
             }
         });
     });
@@ -184,8 +236,8 @@
             return wrap(new Sizzle('#' + id, this)[0]);
         },
 
-        match: function (expression) {
-            return match(this, expression);
+        match: function (selector) {
+            return match(this, selector);
         }
     });
 

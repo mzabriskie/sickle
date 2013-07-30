@@ -126,7 +126,7 @@ QUnit.test('match', function (assert) {
 
 // Issue verification
 QUnit.module('issue verification');
-QUnit.test('element selector', function (assert) {
+QUnit.test('$$ with element selector', function (assert) {
     var error = false,
         result;
     try {
@@ -137,4 +137,68 @@ QUnit.test('element selector', function (assert) {
     assert.equal(error, false, 'Using an element selector should not throw an error');
     assert.equal(result.length, 1, 'Using an element selector should return the element');
     assert.equal(result[0], document.getElementById('wrapper'), 'Using an element selector should return the element');
+});
+
+QUnit.test('getElement with element selector', function (assert) {
+    var error = false,
+        result;
+    try {
+        result = document.getElementById('content').getElement(document.getElementById('wrapper'));
+    } catch (e) {
+        error = true;
+    }
+    assert.equal(error, false, 'Using a child element as a selector should not throw an error');
+    assert.equal(result, document.getElementById('wrapper'), 'Using a child element as a selector should return the element');
+
+    error = false;
+    try {
+        result = document.getElementById('wrapper').getElement(document.getElementById('list'));
+    } catch (e) {
+        error = true;
+    }
+    assert.equal(error, false, 'Using a sibling element as a selector should not throw an error');
+    assert.equal(result, null, 'Using a sibling element as a selector should return null');
+});
+
+QUnit.test('getElements with element selector', function (assert) {
+    var error = false,
+        result;
+    try {
+        result = document.getElementById('content').getElements(document.getElementById('wrapper'));
+    } catch (e) {
+        error = true;
+    }
+    assert.equal(error, false, 'Using a child element as a selector should not throw an error');
+    assert.equal(result.length, 1, 'Using a child element as a selector should return the element');
+    assert.equal(result[0], document.getElementById('wrapper'), 'Using a child element as a selector should return the element');
+
+    error = false;
+    try {
+        result = document.getElementById('wrapper').getElements(document.getElementById('list'));
+    } catch (e) {
+        error = true;
+    }
+    assert.equal(error, false, 'Using a sibling element as a selector should not throw an error');
+    assert.equal(result.length, 0, 'Using a sibling element as a selector should return an empty array');
+});
+
+QUnit.test('match with element selector', function (assert) {
+    var error = false,
+        result;
+    try {
+        result = document.getElementById('wrapper').match(document.getElementById('wrapper'));
+    } catch (e) {
+        error = true;
+    }
+    assert.equal(error, false, 'Using an element as a selector should not throw an error');
+    assert.ok(result, 'Using an element as a selector should match itself');
+
+    error = false;
+    try {
+        result = document.getElementById('wrapper').match(document.getElementById('content'));
+    } catch (e) {
+        error = true;
+    }
+    assert.equal(error, false, 'Using an element as a selector should not throw an error');
+    assert.equal(result, false, 'Using an element as a selector should no match another element');
 });
