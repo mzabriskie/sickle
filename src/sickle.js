@@ -129,6 +129,15 @@
         });
     });
 
+    if (Browser.ie && Browser.version <= 8) {
+        var getElementById = document.getElementById;
+        Document.implement({
+            getElementById: function (id) {
+                return wrap(getElementById(id));
+            }
+        });
+    }
+
     Element.implement({
         getPrevious: function (selector) {
             var node = this,
