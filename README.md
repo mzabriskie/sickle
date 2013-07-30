@@ -5,7 +5,7 @@ Improves MooTools' performance by using Sizzle instead of Slick
 
 ## Benchmarks
 
-These are the results of running the speed test found under <em>test/speed.html</em> executing each query 100 times.
+These are the results of running the speed test found under <code>test/speed.html</code> executing each query 100 times.
 
 <table>
 	<thead>
@@ -74,6 +74,29 @@ There are still some optimizations to be made for older versions of IE. Although
 ```
 
 No further code changes are required. Sickle overrides the MooTools methods that tie into Slick. This allows the API to remain the same, only what's happening under the hood changes.
+
+## Testing
+
+First you will need to clone a copy of the Sickle repository:
+
+```bash
+git clone https://github.com/mzabriskie/sickle.git
+```
+
+From the sickle directory install the Node dependencies:
+
+```bash
+cd sickle
+npm install
+```
+
+Open <code>test/qunit.html</code> in the browser to run QUnit tests or run the following command:
+
+```bash
+grunt qunit
+```
+
+Open <code>test/speed.html</code> in the browser to run speed tests.
 
 ## License
 
