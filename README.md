@@ -19,42 +19,42 @@ These are the results of running the speed test found under <em>test/speed.html<
 		<tr>
 			<td>Chrome</td>
 			<td>55ms</td>
-			<td style="background:#ccffcc;">30ms</td>
+			<td>30ms</td>
 		</tr>
 		<tr>
 			<td>Firefox</td>
 			<td>93ms</td>
-			<td style="background:#ccffcc;">42ms</td>
+			<td>42ms</td>
 		</tr>
 		<tr>
 			<td>Safari</td>
 			<td>41ms</td>
-			<td style="background:#ccffcc;">28ms</td>
+			<td>28ms</td>
 		</tr>
 		<tr>
 			<td>Opera</td>
 			<td>50ms</td>
-			<td style="background:#ccffcc;">30ms</td>
+			<td>30ms</td>
 		</tr>
 		<tr>
 			<td>IE10</td>
 			<td>93ms</td>
-			<td style="background:#ccffcc;">30ms</td>
+			<td>30ms</td>
 		</tr>
 		<tr>
 			<td>IE9</td>
 			<td>96ms</td>
-			<td style="background:#ccffcc;">54ms</td>
+			<td>54ms</td>
 		</tr>
 		<tr>
 			<td>IE8</td>
 			<td>300ms</td>
-			<td style="background:#ffcccc;">381ms</td>
+			<td>381ms</td>
 		</tr>
 		<tr>
 			<td>IE7</td>
 			<td>308ms</td>
-			<td style="background:#ffcccc;">364ms</td>
+			<td>364ms</td>
 		</tr>
 	</tbody>
 </table>
