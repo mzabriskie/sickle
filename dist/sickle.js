@@ -23,23 +23,23 @@
     }
 
     function match(el, selector) {
-        var match = false;
+        var result = false;
 
         switch(typeOf(selector)) {
             case 'null':
-                match = true;
+                result = true;
                 break;
 
             case 'string':
-                match = Sizzle.matchesSelector(el, scrub(selector));
+                result = Sizzle.matchesSelector(el, scrub(selector));
                 break;
 
             case 'element':
-                match = el === selector;
+                result = el === selector;
                 break;
         }
 
-        return match;
+        return result;
     }
 
     var RX_ATTR = /\[(.*?)=([^'"].*?[^'"])\]/g;
