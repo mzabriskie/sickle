@@ -131,8 +131,9 @@
 
     Element.implement({
         getPrevious: function (selector) {
-            var node = this;
-            while ((node = node.previousSibling) !== null) {
+            var node = this,
+                prop = node.previousElementSibling ? 'previousElementSibling' : 'previousSibling';
+            while ((node = node[prop]) !== null) {
                 if (node.nodeType !== 1) continue;
                 if (match(node, selector)) return wrap(node);
             }
@@ -142,8 +143,9 @@
 
         getAllPrevious: function (selector) {
             var nodes = [],
-                node = this;
-            while ((node = node.previousSibling) !== null) {
+                node = this,
+                prop = node.previousElementSibling ? 'previousElementSibling' : 'previousSibling';
+            while ((node = node[prop]) !== null) {
                 if (node.nodeType !== 1) continue;
                 if (match(node, selector)) nodes.push(wrap(node));
             }
@@ -152,8 +154,9 @@
         },
 
         getNext: function (selector) {
-            var node = this;
-            while ((node = node.nextSibling) !== null) {
+            var node = this,
+                prop = node.nextElementSibling ? 'nextElementSibling' : 'nextSibling';
+            while ((node = node[prop]) !== null) {
                 if (node.nodeType !== 1) continue;
                 if (match(node, selector)) return wrap(node);
             }
@@ -163,8 +166,9 @@
 
         getAllNext: function (selector) {
             var nodes = [],
-                node = this;
-            while ((node = node.nextSibling) !== null) {
+                node = this,
+                prop = node.nextElementSibling ? 'nextElementSibling' : 'nextSibling';
+            while ((node = node[prop]) !== null) {
                 if (node.nodeType !== 1) continue;
                 if (match(node, selector)) nodes.push(wrap(node));
             }
