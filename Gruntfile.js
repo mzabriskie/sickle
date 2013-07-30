@@ -46,7 +46,8 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('default', ['jshint', 'testem']);
+    grunt.registerTask('qunit', ['testem']);
+    grunt.registerTask('default', ['jshint', 'publish', 'templates']);
     grunt.registerTask('publish', ['uglify', 'copy:dist']);
     grunt.registerTask('templates', ['includereplace', 'copy:tpl', 'clean:tpl']);
 };
