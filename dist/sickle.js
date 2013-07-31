@@ -129,7 +129,13 @@
         });
     });
 
-    if (Browser.ie && Browser.version <= 8) {
+    // This is for IE <= 8 which doesn't return a proper Element from document.getElementById
+    var uuid = 'sickle-uniqueid-' + Date.now(),
+        temp = new Element('div', {id:uuid, styles:{display:'none'}});
+
+    document.body.appendChild(temp);
+
+    if (!(document.getElementById(uuid) instanceof Element)) {
         var getElementById = document.getElementById;
         Document.implement({
             getElementById: function (id) {
@@ -137,6 +143,8 @@
             }
         });
     }
+
+    document.body.removeChild(temp);
 
     Element.implement({
         getPrevious: function (selector) {
