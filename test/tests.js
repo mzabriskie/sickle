@@ -1,7 +1,7 @@
 // Dollar functions
 QUnit.module('dollar functions');
 QUnit.test('$', function (assert) {
-    assert.equal($('wrapper'), document.getElementById('wrapper'), '$ and document.getElementById found same element');
+    assert.equal(document.id('wrapper'), document.getElementById('wrapper'), '$ and document.getElementById found same element');
 });
 
 QUnit.test('$$', function (assert) {

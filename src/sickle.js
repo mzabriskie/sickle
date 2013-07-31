@@ -67,34 +67,39 @@
         return selector ? selector.replace(RX_ATTR, '[$1="$2"]') : selector;
     }
 
-    // Override $ and $$
-    Window.implement({
-        /**
-         * Find an element by it's ID, get an element from an object, or extend an element with Element methods
-         *
-         * @param {String|Object|Element} el The id of an element, an object to call toElement on, or element to extend
-         * @param {boolean} [nocache] Whether or not to use cache
-         * @param {Document} [doc] Document to use for search, defaults to this.document
-         * @returns {Element} The Element that resulted
-         */
-        $: function (el, nocache, doc) {
-            var result = el;
+    /**
+     * Find an element by it's ID, get an element from an object, or extend an element with Element methods
+     *
+     * @param {String|Object|Element} el The id of an element, an object to call toElement on, or element to extend
+     * @param {boolean} [nocache] Whether or not to use cache
+     * @param {Document} [doc] Document to use for search, defaults to this.document
+     * @returns {Element} The Element that resulted
+     */
+    document.id = function (el, nocache, doc) {
+        var result = el;
 
-            doc = doc || document;
+        doc = doc || document;
 
-            switch(typeOf(el)) {
-                case 'string':
-                    result = doc.getElementById(el);
-                    break;
+        switch(typeOf(el)) {
+            case 'string':
+                result = doc.getElementById(el);
+                break;
 
-                case 'object':
-                    result = el.toElement ? el.toElement(doc) : null;
-                    break;
-            }
+            case 'object':
+                result = el.toElement ? el.toElement(doc) : null;
+                break;
+        }
 
-            return wrap(result, nocache);
-        },
+        return wrap(result, nocache);
+    };
 
+    // Override $
+    if (window.$ === null) Window.implement('$', function(el, nc){
+        return document.id(el, nc, this.document);
+    });
+
+    // Override $$
+    if ($$.toString().match(/Slick\.search/) !== null) Window.implement({
         /**
          * Searches the document for elements matching the selector, or extends elements supplied with Element methods
          *
@@ -125,9 +130,6 @@
             return result;
         }
     });
-
-    // Override document.id
-    document.id = window.$;
 
     // Override getElement and getElements for Element and Document
     Array.forEach([Element, Document], function (clss) {
