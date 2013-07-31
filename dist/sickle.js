@@ -10,6 +10,12 @@
 ;(function (document) {
     'use strict';
 
+    /**
+     * Make sure element has had Element.Prototype applied to it
+     *
+     * @param {Element} el The element to apply Element.Prototype to
+     * @returns {Element}
+     */
     function wrap(el) {
         if (el && !el.$family && el.tagName != 'OBJECT' && el.tagName != 'EMBED') {
             var fireEvent = el.fireEvent;
@@ -22,6 +28,13 @@
         return el;
     }
 
+    /**
+     * Check if an element matches a selector
+     *
+     * @param {Element} el The element to test selector against
+     * @param {String} selector The selector to use for matching
+     * @returns {boolean} True if element matches the selector, otherwise false
+     */
     function match(el, selector) {
         var result = false;
 
@@ -43,27 +56,46 @@
     }
 
     var RX_ATTR = /\[(.*?)=([^'"].*?[^'"])\]/g;
-    function scrub(expression) {
-        return expression ? expression.replace(RX_ATTR, '[$1="$2"]') : expression;
+    /**
+     * Scrub a selector to make it safe for use by Sizzle by adding quotes to attribute expressions
+     *
+     * @param {String} selector The selector to scrub
+     * @returns {String} A selector that is safe for use by Sizzle
+     */
+    function scrub(selector) {
+        return selector ? selector.replace(RX_ATTR, '[$1="$2"]') : selector;
     }
 
+    // Override $ and $$
     Window.implement({
-        $: function (selector) {
-            var el = selector;
+        /**
+         * Find an element by it's ID, get an element from an object, or extend an element with Element methods
+         *
+         * @param {String|Object|Element} el The id of an element, an object to call toElement on, or element to extend
+         * @returns {Element} The Element that resulted
+         */
+        $: function (el) {
+            var result = el;
 
-            switch(typeOf(selector)) {
+            switch(typeOf(el)) {
                 case 'string':
-                    el = document.getElementById(selector);
+                    result = document.getElementById(el);
                     break;
 
                 case 'object':
-                    el = selector.toElement ? selector.toElement() : null;
+                    result = el.toElement ? el.toElement() : null;
                     break;
             }
 
-            return wrap(el);
+            return wrap(result);
         },
 
+        /**
+         * Searches the document for elements matching the selector, or extends elements supplied with Element methods
+         *
+         * @param {String|Element|Array} selector The selector to use for searching the document, or the elements to extend
+         * @returns {Elements} The elements that matched the selector
+         */
         $$: function (selector) {
             var result = [];
 
@@ -81,8 +113,15 @@
         }
     });
 
+    // Override getElement and getElements for Element and Document
     Array.forEach([Element, Document], function (clss) {
         clss.implement({
+            /**
+             * Gets the first descendant element that matches the selector provided
+             *
+             * @param {String|Element} selector The selector to use for searching, or the element to match
+             * @returns {Element} The matching element or null if none matched
+             */
             getElement: function (selector) {
                 var result = null;
 
@@ -105,6 +144,12 @@
                 return result;
             },
 
+            /**
+             * Gets all descendant elements that match the selector provided
+             *
+             * @param {String|Element} selector The selector to use for searching, or the element to match
+             * @returns {Elements} The elements that matched the selector
+             */
             getElements: function (selector) {
                 var result = [];
 
@@ -146,7 +191,14 @@
 
     document.body.removeChild(temp);
 
+    // Override Element methods
     Element.implement({
+        /**
+         * Gets the previous element sibling of this Element that matches the selector provided
+         *
+         * @param {String} selector The selector to match
+         * @returns {Element} The previous element sibling or null if none matched
+         */
         getPrevious: function (selector) {
             var node = this,
                 prop = node.previousElementSibling ? 'previousElementSibling' : 'previousSibling';
@@ -158,6 +210,12 @@
             return null;
         },
 
+        /**
+         * Gets all previous element siblings of this Element that match the selector provided
+         *
+         * @param {String} selector The selector to match
+         * @returns {Elements}
+         */
         getAllPrevious: function (selector) {
             var nodes = [],
                 node = this,
@@ -170,6 +228,12 @@
             return nodes;
         },
 
+        /**
+         * Gets the next element sibling of this Element that matches the selector provided
+         *
+         * @param {String} selector The selector to match
+         * @returns {Element} The next element sibling or null if none matched
+         */
         getNext: function (selector) {
             var node = this,
                 prop = node.nextElementSibling ? 'nextElementSibling' : 'nextSibling';
@@ -181,6 +245,12 @@
             return null;
         },
 
+        /**
+         * Gets all next element siblings of this Element that match the selector provided
+         *
+         * @param {String} selector The selector to match
+         * @returns {Elements}
+         */
         getAllNext: function (selector) {
             var nodes = [],
                 node = this,
@@ -193,6 +263,12 @@
             return nodes;
         },
 
+        /**
+         * Gets the first child element of this Element that matches the selector provided
+         *
+         * @param {String} selector The selector to match
+         * @returns {Element} The first child element or null if none matched
+         */
         getFirst: function (selector) {
             var nodes = this.children,
                 node;
@@ -205,6 +281,12 @@
             return null;
         },
 
+        /**
+         * Gets the last child element of this Element that matches the selector provided
+         *
+         * @param {String} selector The selector to match
+         * @returns {Element} The last child element or null if none matched
+         */
         getLast: function (selector) {
             var nodes = this.children,
                 node,
@@ -218,6 +300,12 @@
             return null;
         },
 
+        /**
+         * Gets the first parent element of this Element that matches the selector provided
+         *
+         * @param {String} selector The selector to match
+         * @returns {Element} The first parent element or null if none matched
+         */
         getParent: function (selector) {
             var node = this;
             while ((node = node.parentNode) !== null) {
@@ -227,6 +315,12 @@
             return null;
         },
 
+        /**
+         * Gets all the parent elements of this Element that match the selector provided
+         *
+         * @param {String} selector The selector to match
+         * @returns {Elements} The parent elements that match
+         */
         getParents: function (selector) {
             var parents = [],
                 node = this;
@@ -237,10 +331,22 @@
             return parents;
         },
 
+        /**
+         * Gets all the sibling elements of this Element that match the selector provided
+         *
+         * @param {String} selector The selector to match
+         * @returns {Elements} The sibling elements that match
+         */
         getSiblings: function (selector) {
             return this.getAllNext(selector).combine(this.getAllPrevious(selector));
         },
 
+        /**
+         * Gets all the child elements of this Element that match the selector provided
+         *
+         * @param {String} selector The selector to match
+         * @returns {Elements} The child elements that match
+         */
         getChildren: function (selector) {
             var children = this.children,
                 nodes = [],
@@ -253,10 +359,22 @@
             return nodes.reverse();
         },
 
+        /**
+         * Gets the element with the specified id found inside this Element
+         *
+         * @param {String} id The ID of the Element to find
+         * @returns {Element} The element with the specified id or null if none matched
+         */
         getElementById: function (id) {
             return wrap(new Sizzle('#' + id, this)[0]);
         },
 
+        /**
+         * Tests this element to see if it matches the seletcor provided
+         *
+         * @param {String|Element} selector The selector or element to compare against
+         * @returns {boolean} True if selector isn't provided, or matches this element, otherwise false
+         */
         match: function (selector) {
             return match(this, selector);
         }
