@@ -14,6 +14,18 @@ QUnit.test('$$', function (assert) {
     assert.equal(result[0], document.getElementById('link-google'), '$$ should find the correct element');
     assert.equal(result[1], document.getElementById('link-yahoo'), '$$ should find the correct element');
     assert.equal(result[2], document.getElementById('link-bing'), '$$ should find the correct element');
+
+    result = $$([document.getElementById('link-google'), document.getElementById('link-yahoo'), document.getElementById('link-bing')]);
+    assert.equal(result.length, 3, '$$ should find all matching elements');
+    assert.equal(result[0], document.getElementById('link-google'), '$$ should find the correct element');
+    assert.equal(result[1], document.getElementById('link-yahoo'), '$$ should find the correct element');
+    assert.equal(result[2], document.getElementById('link-bing'), '$$ should find the correct element');
+
+    result = $$(document.getElementById('link-google'), document.getElementById('link-yahoo'), document.getElementById('link-bing'));
+    assert.equal(result.length, 3, '$$ should find all matching elements');
+    assert.equal(result[0], document.getElementById('link-google'), '$$ should find the correct element');
+    assert.equal(result[1], document.getElementById('link-yahoo'), '$$ should find the correct element');
+    assert.equal(result[2], document.getElementById('link-bing'), '$$ should find the correct element');
 });
 
 // Document prototype
