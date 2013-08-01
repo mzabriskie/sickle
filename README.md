@@ -84,8 +84,7 @@ git clone https://github.com/mzabriskie/sickle.git
 From the sickle directory install the Node dependencies:
 
 ```bash
-cd sickle
-npm install
+cd sickle && npm install
 ```
 
 Open <code>test/qunit.html</code> in the browser to run QUnit tests or run the following command:
