@@ -2,6 +2,9 @@
 QUnit.module('dollar functions');
 QUnit.test('$', function (assert) {
     assert.equal(document.id('wrapper'), document.getElementById('wrapper'), '$ and document.getElementById found same element');
+    assert.equal(document.id(1), null, 'Using an invalid selector should return null');
+    assert.equal(document.id({}), null, 'Object with no toElement method should return null');
+    assert.equal(document.id({toElement: function () {return document.id('wrapper');}}), document.id('wrapper'), 'Object with toElement should return the correct element');
 });
 
 QUnit.test('$$', function (assert) {

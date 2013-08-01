@@ -18,7 +18,7 @@
      * @returns {Element}
      */
     function wrap(el, nocache) {
-        if (!nocache && el && !el.$family && el.tagName != 'OBJECT' && el.tagName != 'EMBED') {
+        if (!nocache && el && el.nodeType === 1 && !el.$family && el.tagName != 'OBJECT' && el.tagName != 'EMBED') {
             var fireEvent = el.fireEvent;
             // wrapping needed in IE7, or else crash
             el._fireEvent = function(type, event){
@@ -99,11 +99,12 @@
      * @returns {Element} The Element that resulted
      */
     document.id = function (el, nocache, doc) {
-        var result = el;
+        var result = null,
+            type = typeOf(el);
 
         doc = doc || document;
 
-        switch(typeOf(el)) {
+        switch(type) {
             case 'string':
                 result = doc.getElementById(el);
                 break;
@@ -111,6 +112,18 @@
             case 'object':
                 result = el.toElement ? el.toElement(doc) : null;
                 break;
+
+            case 'element':
+                result = el;
+                break;
+
+            default:
+                if (type === 'textnode' ||
+                    type === 'whitespace' ||
+                    type === 'window' ||
+                    type === 'document') {
+                    result = el;
+                }
         }
 
         return wrap(result, nocache);
@@ -118,7 +131,7 @@
 
     // Override $
     if (window.$ === null) Window.implement('$', function(el, nc){
-        return document.id(el, nc, this.document);
+        return document.id(el, nc, document);
     });
 
     // Override $$
