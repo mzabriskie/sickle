@@ -135,14 +135,15 @@
                     label = document.getElementById('average'),
                     output = document.getElementById('output');
 
-                document.getElementById('query-count').value = localStorage ? localStorage.getItem('queryCount') || 1 : 1;
+                document.getElementById('query-count').value = typeof localStorage !== 'undefined' ?
+                                                                localStorage.getItem('queryCount') || 1 : 1;
 
                 function benchmark() {
                     var start, end, avg = 0;
 
                     output.innerHTML = '';
                     LOOP_MAX = document.getElementById('query-count').value;
-                    if (localStorage) {
+                    if (typeof localStorage !== 'undefined') {
                         localStorage.setItem('queryCount', LOOP_MAX);
                     }
                     if (LOOP_MAX != lastQueryCount) {
