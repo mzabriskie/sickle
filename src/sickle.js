@@ -45,12 +45,35 @@
                 break;
 
             case 'string':
-                result = Sizzle.matchesSelector(el, scrub(selector));
+                try {
+                    result = Sizzle.matchesSelector(el, scrub(selector));
+                } catch (e) {
+                    // Ignore syntax error
+                }
                 break;
 
             case 'element':
                 result = el === selector;
                 break;
+        }
+
+        return result;
+    }
+
+    /**
+     * Search for elements matching the selector provided
+     *
+     * @param {String} selector The selector to use for search
+     * @param {Element|Document} [context] The root element to perform search from
+     * @returns {Array} The elements that matched the selector
+     */
+    function search(selector, context) {
+        var result = [];
+
+        try {
+            result = new Sizzle(scrub(selector), context);
+        } catch (e) {
+            // Ignore syntax error
         }
 
         return result;
@@ -112,7 +135,7 @@
             if (arguments.length === 1) {
                 switch(typeOf(selector)) {
                     case 'string':
-                        result = new Elements(new Sizzle(scrub(selector), document));
+                        result = new Elements(search(selector, document));
                         break;
 
                     case 'element':
@@ -145,7 +168,7 @@
 
                 switch(typeOf(selector)) {
                     case 'string':
-                        result = wrap(new Sizzle(scrub(selector), this)[0]);
+                        result = wrap(search(selector, this)[0]);
                         break;
 
                     case 'element':
@@ -173,7 +196,7 @@
 
                 switch(typeOf(selector)) {
                     case 'string':
-                        result = new Elements(new Sizzle(scrub(selector), this));
+                        result = new Elements(search(selector, this));
                         break;
 
                     case 'element':
@@ -384,7 +407,7 @@
          * @returns {Element} The element with the specified id or null if none matched
          */
         getElementById: function (id) {
-            return wrap(new Sizzle('#' + id, this)[0]);
+            return wrap(search('#' + id, this)[0]);
         },
 
         /**

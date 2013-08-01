@@ -214,3 +214,33 @@ QUnit.test('match with element selector', function (assert) {
     assert.equal(error, false, 'Using an element as a selector should not throw an error');
     assert.equal(result, false, 'Using an element as a selector should no match another element');
 });
+
+QUnit.test('syntax errors', function (assert) {
+    var error = false,
+        result;
+    try {
+        result = document.getElementById('content').getElement('#' + document.getElementById('wrapper'));
+    } catch (e) {
+        error = true;
+    }
+    assert.equal(error, false, 'Using an invalid selector for getElement should not throw an error');
+    assert.equal(result, null, 'Using an invalid selector for getElement should return null');
+
+    error = false;
+    try {
+        result = document.getElementById('content').getElements('#' + document.getElementById('wrapper'));
+    } catch (e) {
+        error = true;
+    }
+    assert.equal(error, false, 'Using an invalid selector for getElements should not throw an error');
+    assert.equal(result.length, 0, 'Using an invalid selector for getElements should return an empty array');
+
+    error = false;
+    try {
+        result = document.getElementById('content').match('#' + document.getElementById('content'));
+    } catch (e) {
+        error = true;
+    }
+    assert.equal(error, false, 'Using an invalid selector for match should not throw an error');
+    assert.equal(result, false, 'Using an invalid selector for match should return false');
+});
