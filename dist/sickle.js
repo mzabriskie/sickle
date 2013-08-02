@@ -10,6 +10,10 @@
 ;(function (window, document) {
     'use strict';
 
+    var Sickle = {
+        IGNORE_SYNTAX_ERRORS: true
+    };
+
     /**
      * Make sure element has had Element.Prototype applied to it
      *
@@ -48,7 +52,9 @@
                 try {
                     result = Sizzle.matchesSelector(el, scrub(selector));
                 } catch (e) {
-                    // Ignore syntax error
+                    if (!Sickle.IGNORE_SYNTAX_ERRORS) {
+                        throw e;
+                    }
                 }
                 break;
 
@@ -73,7 +79,9 @@
         try {
             result = new Sizzle(scrub(selector), context);
         } catch (e) {
-            // Ignore syntax error
+            if (!Sickle.IGNORE_SYNTAX_ERRORS) {
+                throw e;
+            }
         }
 
         return result;
@@ -228,7 +236,7 @@
         });
     });
 
-    // This is for IE <= 8 which doesn't return a proper Element from document.getElementById
+    // This is for IE<9 which doesn't return a proper Element from document.getElementById
     var uuid = 'sickle-uniqueid-' + Date.now(),
         temp = new Element('div', {id:uuid, styles:{display:'none'}});
 
@@ -433,5 +441,12 @@
             return match(this, selector);
         }
     });
+
+    // Expose Sickle
+    if (typeof define === 'function' && define.amd) {
+        define('Sickle', [], function() { return Sickle; });
+    } else {
+        window.Sickle = Sickle;
+    }
 
 })(window, document);
