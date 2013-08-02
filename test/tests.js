@@ -29,6 +29,16 @@ QUnit.test('$$', function (assert) {
     assert.equal(result[0], document.getElementById('link-google'), '$$ should find the correct element');
     assert.equal(result[1], document.getElementById('link-yahoo'), '$$ should find the correct element');
     assert.equal(result[2], document.getElementById('link-bing'), '$$ should find the correct element');
+
+    result = document.getElementById('table').getElements('a');
+    assert.equal(result.length, 3, 'Did not find all expected elements');
+    assert.equal(typeOf(result), 'elements', 'getElements should return elements');
+    assert.equal($$(result).length, 3, 'Using elements as selector for $$ should return elements');
+
+    result = document.getElementsByTagName('td');
+    assert.equal(result.length, 6, 'Did not find all expected elements');
+    assert.equal(typeOf(result), 'collection', 'getElementsByTagName should return collection');
+    assert.equal($$(result).length, 6, 'Using collection as selector for $$ should return elements');
 });
 
 // Document prototype

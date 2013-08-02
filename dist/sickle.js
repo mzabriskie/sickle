@@ -11,7 +11,7 @@
     'use strict';
 
     var Sickle = {
-        version: '0.1.9',
+        version: '0.1.10',
         IGNORE_SYNTAX_ERRORS: true
     };
 
@@ -162,6 +162,14 @@
 
                     case 'element':
                         result.push(wrap(selector));
+                        break;
+
+                    case 'elements':
+                        result = selector;
+                        break;
+
+                    case 'collection':
+                        result = new Elements(selector);
                         break;
 
                     case 'array':
