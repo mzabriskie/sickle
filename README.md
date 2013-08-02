@@ -95,6 +95,18 @@ grunt qunit
 
 Open <code>test/speed.html</code> in the browser to run speed tests.
 
+## Building
+
+First clone the Sickle repository and install the Node dependencies (see the first two steps from Testing above).
+
+Run the following command to build the project:
+
+```bash
+grunt
+```
+
+This will run the tests and if they pass copy the built files to the <code>dist</code> directory.
+
 ## License
 
 Sickle is released under the MIT license.
