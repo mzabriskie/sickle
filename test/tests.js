@@ -46,6 +46,7 @@ QUnit.module('document prototype');
 QUnit.test('getElement', function (assert) {
     assert.equal(document.getElement('table[id=table]'), document.getElementById('table'), 'document.getElement should find the correct element');
     assert.equal(document.getElementById('qunit-fixture').getElement('table[id=table]'), document.getElementById('table'), 'element.getElement should find the correct element');
+    assert.strictEqual(document.getElement('abc'), null, 'document.getElement should return null when a match is not found');
 });
 
 QUnit.test('getElements', function (assert) {
@@ -143,6 +144,7 @@ QUnit.test('getChildren', function (assert) {
 
 QUnit.test('getElementById', function (assert) {
     assert.equal(document.getElementById('wrapper').getElementById('bar'), document.getElementById('bar'), 'element.getElementById should find the correct element');
+    assert.strictEqual(document.getElementById('wrapper').getElementById('abc'), null, 'element.getElementById should return null when a match is not found');
 });
 
 QUnit.test('match', function (assert) {
