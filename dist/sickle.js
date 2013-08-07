@@ -11,7 +11,7 @@
     'use strict';
 
     var Sickle = {
-        version: '0.1.10',
+        version: '0.1.11',
         IGNORE_SYNTAX_ERRORS: true
     };
 
@@ -20,7 +20,7 @@
      *
      * @param {Element} el The element to apply Element.Prototype to
      * @param {boolean} [nocache] Whether or not to use cache
-     * @returns {Element}
+     * @returns {Element} The element that was wrapped, otherwise null if the element doesn't exist
      */
     function wrap(el, nocache) {
         if (!nocache && el && el.nodeType === 1 && !el.$family && el.tagName != 'OBJECT' && el.tagName != 'EMBED') {
@@ -31,7 +31,7 @@
             };
             Object.append(el, Element.Prototype);
         }
-        return el;
+        return el || null;
     }
 
     /**
