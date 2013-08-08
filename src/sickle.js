@@ -11,7 +11,7 @@
     'use strict';
 
     var Sickle = {
-        version: '0.1.11',
+        version: '0.1.12',
         IGNORE_SYNTAX_ERRORS: true
     };
 
@@ -88,7 +88,7 @@
         return result;
     }
 
-    var RX_ATTR = /\[(.*?)=([^'"].*?[^'"])\]/g;
+    var RX_ATTR = /\[(.*?)=([^'"]?.*?[^'"]?)\]/g;
     /**
      * Scrub a selector to make it safe for use by Sizzle by adding quotes to attribute expressions
      *

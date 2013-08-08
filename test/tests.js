@@ -259,3 +259,12 @@ QUnit.test('syntax errors', function (assert) {
     assert.equal(error, false, 'Using an invalid selector for match should not throw an error');
     assert.equal(result, false, 'Using an invalid selector for match should return false');
 });
+
+QUnit.test('attribute selectors', function (assert) {
+    assert.equal(document.getElement('[data-year=2013]'), document.getElementById('calendar-year'), 'document.getElement should find the correct element');
+    assert.equal(document.getElement('[data-year=2013] [data-month=1]'), document.getElementById('calendar-month'), 'document.getElement should find the correct element');
+    assert.equal(document.getElement('[data-year=2013] [data-month=1] [data-day=1]'), document.getElementById('calendar-day'), 'document.getElement should find the correct element');
+    assert.equal(document.getElement('[data-year=2013] [data-month=1] [data-day=1] span.label'), document.getElementById('calendar-label'), 'document.getElement should find the correct element');
+    assert.equal(document.getElement('[id=calendar-year][data-year=2013]'), document.getElementById('calendar-year'), 'document.getElement should find the correct element');
+    assert.equal(document.getElement('[href=http://www.google.com]'), document.getElementById('link-google'), 'document.getElement should find the correct element');
+});
