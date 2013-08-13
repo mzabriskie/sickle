@@ -261,6 +261,8 @@ QUnit.test('syntax errors', function (assert) {
 });
 
 QUnit.test('attribute selectors', function (assert) {
+    assert.equal(document.getElement('[data-year="2013"]'), document.getElementById('calendar-year'), 'document.getElement should find the correct element');
+    assert.equal(document.getElement('[data-year=\'2013\']'), document.getElementById('calendar-year'), 'document.getElement should find the correct element');
     assert.equal(document.getElement('[data-year=2013]'), document.getElementById('calendar-year'), 'document.getElement should find the correct element');
     assert.equal(document.getElement('[data-year=2013] [data-month=1]'), document.getElementById('calendar-month'), 'document.getElement should find the correct element');
     assert.equal(document.getElement('[data-year=2013] [data-month=1] [data-day=1]'), document.getElementById('calendar-day'), 'document.getElement should find the correct element');
