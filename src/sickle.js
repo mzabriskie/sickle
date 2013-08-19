@@ -11,7 +11,7 @@
     'use strict';
 
     var Sickle = {
-        version: '0.1.14',
+        version: '0.1.15',
         IGNORE_SYNTAX_ERRORS: true
     };
 
@@ -380,7 +380,7 @@
         getParent: function (selector) {
             var node = this;
             while ((node = node.parentNode) !== null) {
-                if (node === document) break;
+                if (node.nodeType !== 1) continue;
                 if (match(node, selector)) return wrap(node);
             }
             return null;
@@ -396,7 +396,7 @@
             var parents = new Elements(),
                 node = this;
             while ((node = node.parentNode) !== null) {
-                if (node === document) break;
+                if (node.nodeType !== 1) continue;
                 if (match(node, selector)) parents.push(wrap(node));
             }
             return parents;

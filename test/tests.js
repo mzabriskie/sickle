@@ -272,3 +272,10 @@ QUnit.test('attribute selectors', function (assert) {
     assert.equal(document.getElement('[id=calendar-year][data-year=2013]'), document.getElementById('calendar-year'), 'document.getElement should find the correct element');
     assert.equal(document.getElement('[href=http://www.google.com]'), document.getElementById('link-google'), 'document.getElement should find the correct element');
 });
+
+QUnit.test('document fragment', function (assert) {
+    var fragment = document.createDocumentFragment(),
+        child = new Element('div');
+    fragment.appendChild(child);
+    assert.equal(child.getParent(), null, 'element.getParent should not include document fragment');
+});
