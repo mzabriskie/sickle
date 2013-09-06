@@ -1,6 +1,6 @@
 {
     "name": "Sickle",
-    "version": "0.1.15",
+    "version": "0.1.16",
     "description": "Improves MooTools' performance by using Sizzle instead of Slick",
     "author": "Matt Zabriskie",
     "license": "MIT",

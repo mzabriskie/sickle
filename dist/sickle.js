@@ -11,7 +11,7 @@
     'use strict';
 
     var Sickle = {
-        version: '0.1.15',
+        version: '0.1.16',
         IGNORE_SYNTAX_ERRORS: true
     };
 
@@ -88,7 +88,7 @@
         return result;
     }
 
-    var RX_ATTR = /\[(.*?)=(\s*)(.{1}|[^'"]{1}.*?[^'"]{1})\]/g;
+    var RX_ATTR = /\[([^\]\[]*)=(\s*)(.{1}|[^'"]{1}.*?[^'"]{1})(\s*)\]/g;
     /**
      * Scrub a selector to make it safe for use by Sizzle by adding quotes to attribute expressions
      *
@@ -96,7 +96,7 @@
      * @returns {String} A selector that is safe for use by Sizzle
      */
     function scrub(selector) {
-        return selector ? selector.replace(RX_ATTR, '[$1=$2"$3"]') : selector;
+        return selector ? selector.replace(RX_ATTR, '[$1=$2"$3"$4]') : selector;
     }
 
     /**
