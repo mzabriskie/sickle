@@ -11,7 +11,7 @@
     'use strict';
 
     var Sickle = {
-        version: '0.1.17',
+        version: '0.1.18',
         IGNORE_SYNTAX_ERRORS: true
     };
 
@@ -97,6 +97,62 @@
      */
     function scrub(selector) {
         return selector ? selector.replace(RX_ATTR, '[$1=$2"$3"$4]') : selector;
+    }
+
+    /**
+     * Re-generates a selector from a parsed selector's metadata
+     *
+     * @param {Object} parsed The parsed metadata
+     * @returns {String} A re-generated selector
+     */
+    function regen(parsed) {
+        var selector = '',
+            list, item, temp, i, l;
+
+        selector += parsed.combinator;
+
+        if (parsed.tag && parsed.tag !== '*') {
+            selector += parsed.tag;
+        }
+
+        if (parsed.id) {
+            selector += '#' + parsed.id;
+        }
+
+        if (parsed.classList) {
+            list = parsed.classList;
+            for (i=0, l=list.length; i<l; i++) {
+                selector += '.' + list[i];
+            }
+        }
+
+        if (parsed.attributes) {
+            list = parsed.attributes;
+            for (i=0, l=list.length; i<l; i++) {
+                item = list[i];
+                temp = '[' + item.key;
+                if (item.value) {
+                    temp += item.operator || '=';
+                    temp += value;
+                }
+                temp += ']';
+                selector += temp;
+            }
+        }
+
+        if (parsed.pseudos) {
+            list = parsed.pseudos;
+            for (i=0, l=list.length; i<l; i++) {
+                item = list[i];
+                temp = ':' + item.key;
+                if (item.value) {
+                    temp += '(' + item.value + ')';
+                }
+                selector += temp;
+            }
+        }
+
+        return selector;
     }
 
     /**
@@ -378,10 +434,28 @@
          * @returns {Element} The first parent element or null if none matched
          */
         getParent: function (selector) {
-            var node = this;
+            var node = this,
+                child = '';
+
+            if (selector) {
+                var parsed = Slick.parse(selector).expressions[0];
+                if (parsed.length > 1) {
+                    selector = regen(parsed[0]);
+                    for (var i=1, l=parsed.length; i<l; i++) {
+                        child += regen(parsed[i]);
+                    }
+                }
+            }
+
             while ((node = node.parentNode) !== null) {
                 if (node.nodeType !== 1) continue;
-                if (match(node, selector)) return wrap(node);
+                if (match(node, selector)) {
+                    if (child) {
+                        return wrap(node).getElement(child);
+                    } else {
+                        return wrap(node);
+                    }
+                }
             }
             return null;
         },
@@ -394,10 +468,28 @@
          */
         getParents: function (selector) {
             var parents = new Elements(),
-                node = this;
+                node = this,
+                child = '';
+
+            if (selector) {
+                var parsed = Slick.parse(selector).expressions[0];
+                if (parsed.length > 1) {
+                    selector = regen(parsed[0]);
+                    for (var i=1, l=parsed.length; i<l; i++) {
+                        child += regen(parsed[i]);
+                    }
+                }
+            }
+
             while ((node = node.parentNode) !== null) {
                 if (node.nodeType !== 1) continue;
-                if (match(node, selector)) parents.push(wrap(node));
+                if (match(node, selector)) {
+                    if (child) {
+                        return wrap(node).getElements(child);
+                    } else {
+                        parents.push(wrap(node));
+                    }
+                }
             }
             return parents;
         },

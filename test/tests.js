@@ -282,3 +282,10 @@ QUnit.test('document fragment', function (assert) {
     fragment.appendChild(child);
     assert.equal(child.getParent(), null, 'element.getParent should not include document fragment');
 });
+
+QUnit.test('parent child', function (assert) {
+    var child = document.getElementById('foo');
+    assert.equal(child.getParent('#content #wrapper #bar'), document.getElementById('bar'), 'element.getParent should get parent children');
+    assert.equal(child.getParents('#content #wrapper #bar')[0], document.getElementById('bar'), 'element.getParents should get parent children');
+    assert.equal(child.getParents('#content #wrapper span').length, 3, 'element.getParents should find all parent children');
+});
