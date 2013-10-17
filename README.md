@@ -73,7 +73,7 @@ These are the results of running the speed test found under <code>test/speed.htm
 
 No further code changes are required. Sickle overrides the MooTools methods that tie into Slick. This allows the API to remain the same, only what's happening under the hood changes.
 
-## Testing
+## Building
 
 First you will need to clone a copy of the Sickle repository:
 
@@ -87,18 +87,6 @@ From the sickle directory install the Node dependencies:
 cd sickle && npm install
 ```
 
-Open <code>test/qunit.html</code> in the browser to run QUnit tests or run the following command:
-
-```bash
-grunt qunit
-```
-
-Open <code>test/speed.html</code> in the browser to run speed tests.
-
-## Building
-
-First clone the Sickle repository and install the Node dependencies (see the first two steps from Testing above).
-
 Run the following command to build the project:
 
 ```bash
@@ -106,6 +94,18 @@ grunt
 ```
 
 This will run the tests and if they pass copy the built files to the <code>dist</code> directory.
+
+## Testing
+
+First clone the Sickle repository and install the Node dependencies (see the first two steps from Building above).
+
+Open <code>test/qunit.html</code> in the browser to run QUnit tests or run the following command:
+
+```bash
+grunt qunit
+```
+
+Open <code>test/speed.html</code> in the browser to run speed tests.
 
 ## Issues
 
