@@ -1,5 +1,6 @@
 /*global module:false*/
 module.exports = function(grunt) {
+    grunt.loadNpmTasks('grunt-banner');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -8,6 +9,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-include-replace');
 
     grunt.initConfig({
+        pkg: grunt.file.readJSON('package.json'),
+        meta: {
+            banner: '/* <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+        },
         jshint: {
             all: ['Gruntfile.js', 'src/sickle.js']
         },
@@ -42,12 +47,24 @@ module.exports = function(grunt) {
             }
         },
         clean: {
-            tpl: 'test/tpl'
+            tpl: 'test/tpl/**',
+            dist: 'dist/**'
+        },
+        usebanner: {
+            dist: {
+                options: {
+                    banner: '<%= meta.banner %>',
+                    linebreak: false
+                },
+                files: {
+                    src: ['dist/*.js']
+                }
+            }
         }
     });
 
     grunt.registerTask('test', ['templates', 'jshint', 'qunit']);
     grunt.registerTask('default', ['test', 'publish']);
-    grunt.registerTask('publish', ['uglify', 'copy:dist']);
+    grunt.registerTask('publish', ['uglify', 'copy:dist', 'usebanner:dist']);
     grunt.registerTask('templates', ['includereplace', 'copy:tpl', 'clean:tpl']);
 };
