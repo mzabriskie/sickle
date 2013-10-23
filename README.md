@@ -111,7 +111,7 @@ Open <code>test/speed.html</code> in the browser to run speed tests.
 
 If you think you've found a bug please follow these steps:
 
-1. Make sure the issue hasn't already been addressed by updating your code to use the latest release on master.
+1. Make sure the issue hasn't already been fixed by updating your code to use the latest release on master.
 2. Check [existing issues](https://github.com/mzabriskie/sickle/issues) to see if it has already been logged by someone else.
 3. [Create an issue](https://github.com/mzabriskie/sickle/issues/new) supplying a [JSFiddle](http://jsfiddle.net) or [JSBin](http://jsbin.com) demonstrating the issue that you have encountered.
 
