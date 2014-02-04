@@ -11,7 +11,7 @@
     'use strict';
 
     var Sickle = {
-        version: '0.1.18',
+        version: '1.0.0',
         IGNORE_SYNTAX_ERRORS: true
     };
 
