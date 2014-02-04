@@ -1,7 +1,7 @@
 /**
  * Sickle allows developers using MooTools to swap out Slick for Sizzle with no API changes.
  *
- * Copyright (c) 2013 by Matt Zabriskie
+ * Copyright (c) 2014 by Matt Zabriskie
  * Released under the MIT license
  *
  * Special thanks to Christoph Pojer for his Gist (https://gist.github.com/cpojer/361474),
