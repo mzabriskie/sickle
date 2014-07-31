@@ -61,14 +61,30 @@ These are the results of running the speed test found under <code>test/speed.htm
 
 ## Installing
 
+#### Bower
+
+```bash
+$ bower install mootools
+$ bower install sizzle
+$ bower install sickle
+```
+
+```html
+<script src="bower_components/mootools/dist/mootools-core.min.js"></script>
+<script src="bower_components/sizzle/dist/sizzle.min.js"></script>
+<script src="bower_components/sickle/dist/sickle.min.js"></script>
+```
+
+#### Manually
+
 - Download [Sizzle](http://sizzlejs.com)
 - Download [Sickle](https://raw.github.com/mzabriskie/sickle/master/dist/sickle.js) or [Sickle minified](https://raw.github.com/mzabriskie/sickle/master/dist/sickle.min.js)
 - Include them immediately after you include [MooTools](http://mootools.net)
 
 ```html
-<script src="js/mootools.js"></script>
-<script src="js/sizzle.js"></script>
-<script src="js/sickle.js"></script>
+<script src="js/mootools.min.js"></script>
+<script src="js/sizzle.min.js"></script>
+<script src="js/sickle.min.js"></script>
 ```
 
 No further code changes are required. Sickle overrides the MooTools methods that tie into Slick. This allows the API to remain the same, only what's happening under the hood changes.
