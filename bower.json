@@ -1,0 +1,37 @@
+{
+  "name": "sickle",
+  "version": "1.0.0",
+  "homepage": "https://github.com/mzabriskie/sickle",
+  "authors": [
+    "Matt Zabriskie"
+  ],
+  "description": "Improves MooTools' performance by using Sizzle instead of Slick",
+  "main": "./dist/sickle.js",
+  "license": "MIT",
+  "keywords": [
+    "mootools",
+    "slick",
+    "sizzle",
+    "query",
+    "selector",
+    "performance"
+  ],
+  "ignore": [
+    "**/.*",
+	"*.md",
+	"*.iml",
+	"bower_components",
+    "node_modules",
+	"src",
+    "test",
+	"tpl",
+	"Gruntfile.js",
+	"package.json"
+  ],
+  "devDependencies": {
+    "jquery": "~2.1.1",
+    "sizzle": "~2.0.0",
+    "mootools": "https://raw.githubusercontent.com/mootools/mootools-core/master/dist/mootools-core.js",
+    "qunit": "~1.14.0"
+  }
+}
