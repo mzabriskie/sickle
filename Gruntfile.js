@@ -21,8 +21,15 @@ module.exports = function(grunt) {
         },
         uglify: {
             main: {
+				options: {
+					sourceMap: true,
+					sourceMapName: 'dist/sickle.min.map',
+					beautify: {
+						'ascii_only': true
+					}
+				},
                 files: {
-                    'dist/sickle.min.js': ['src/sickle.js']
+                    'dist/sickle.min.js': ['dist/sickle.js']
                 }
             }
         },

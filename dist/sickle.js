@@ -1,4 +1,4 @@
-/* Sickle - v1.0.0 - 2014-02-03 */
+/* Sickle - v1.0.0 - 2014-07-31 */
 /**
  * Sickle allows developers using MooTools to swap out Slick for Sizzle with no API changes.
  *
