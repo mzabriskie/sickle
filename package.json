@@ -1,24 +1,26 @@
 {
-    "name": "Sickle",
-    "version": "1.0.0",
-    "description": "Improves MooTools' performance by using Sizzle instead of Slick",
-    "author": "Matt Zabriskie",
-    "license": "MIT",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/mzabriskie/sickle.git"
-    },
-    "scripts": {
-        "test": "grunt jshint qunit"
-    },
-    "devDependencies": {
-        "grunt": "~0.4.0",
-        "grunt-banner": "0.2.0",
-        "grunt-contrib-clean": "0.5.0",
-        "grunt-contrib-copy": "0.4.1",
-        "grunt-contrib-jshint": "0.4.3",
-        "grunt-contrib-qunit": "0.2.2",
-        "grunt-contrib-uglify": "0.5.1",
-        "grunt-include-replace": "1.1.0"
-    }
+  "name": "Sickle",
+  "version": "1.0.0",
+  "description": "Improves MooTools' performance by using Sizzle instead of Slick",
+  "author": "Matt Zabriskie",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mzabriskie/sickle.git"
+  },
+  "scripts": {
+    "test": "grunt jshint qunit"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.0",
+    "grunt-banner": "^0.2.0",
+    "grunt-contrib-clean": "^0.5.0",
+    "grunt-contrib-copy": "^0.4.1",
+    "grunt-contrib-jshint": "^0.4.3",
+    "grunt-contrib-qunit": "^0.2.2",
+    "grunt-contrib-uglify": "0.5.1",
+    "grunt-include-replace": "^1.1.0",
+    "grunt-replace": "^0.7.8",
+    "load-grunt-tasks": "^0.6.0"
+  }
 }
