@@ -4,3 +4,4 @@ email:
   on_success: never
 before_script:
   - npm install -g grunt-cli
+  - bower install
