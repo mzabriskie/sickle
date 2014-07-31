@@ -94,19 +94,19 @@ No further code changes are required. Sickle overrides the MooTools methods that
 First you will need to clone a copy of the Sickle repository:
 
 ```bash
-git clone https://github.com/mzabriskie/sickle.git
+$ git clone https://github.com/mzabriskie/sickle.git
 ```
 
 From the sickle directory install the Node dependencies:
 
 ```bash
-cd sickle && npm install
+$ cd sickle && npm install
 ```
 
 Run the following command to build the project:
 
 ```bash
-grunt
+$ grunt
 ```
 
 This will run the tests and if they pass copy the built files to the <code>dist</code> directory.
@@ -118,7 +118,7 @@ First clone the Sickle repository and install the Node dependencies (see the fir
 Open <code>test/qunit.html</code> in the browser to run QUnit tests or run the following command:
 
 ```bash
-grunt qunit
+$ grunt qunit
 ```
 
 Open <code>test/speed.html</code> in the browser to run speed tests.
