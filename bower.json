@@ -1,6 +1,6 @@
 {
   "name": "sickle",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://github.com/mzabriskie/sickle",
   "authors": [
     "Matt Zabriskie"
@@ -18,15 +18,15 @@
   ],
   "ignore": [
     "**/.*",
-	"*.md",
-	"*.iml",
-	"bower_components",
+    "*.md",
+    "*.iml",
+    "bower_components",
     "node_modules",
-	"src",
+    "src",
     "test",
-	"tpl",
-	"Gruntfile.js",
-	"package.json"
+    "tpl",
+    "Gruntfile.js",
+    "package.json"
   ],
   "devDependencies": {
     "jquery": "~2.1.1",
