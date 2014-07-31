@@ -1,17 +1,11 @@
 /*global module:false*/
 module.exports = function(grunt) {
-    grunt.loadNpmTasks('grunt-banner');
-    grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-qunit');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-include-replace');
+	require('load-grunt-tasks')(grunt);
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         meta: {
-            banner: '/* <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+            banner: '/* <%= pkg.name %> v<%= pkg.version %> */\n'
         },
         jshint: {
             all: ['Gruntfile.js', 'src/sickle.js']
@@ -29,7 +23,7 @@ module.exports = function(grunt) {
 					}
 				},
                 files: {
-                    'dist/sickle.min.js': ['dist/sickle.js']
+                    'dist/sickle.min.js': ['src/sickle.js']
                 }
             }
         },
@@ -67,11 +61,27 @@ module.exports = function(grunt) {
                     src: ['dist/*.js']
                 }
             }
-        }
+        },
+		replace: {
+			dist: {
+				options: {
+					patterns: [
+						{
+							match: 'version',
+							replacement: '<%= pkg.version %>'
+						}
+					]
+				},
+				files: [
+					{src: 'dist/sickle.js', dest: 'dist/', expand: true, flatten: true},
+					{src: 'dist/sickle.min.js', dest: 'dist/', expand: true, flatten: true}
+				]
+			}
+		}
     });
 
     grunt.registerTask('test', ['templates', 'jshint', 'qunit']);
     grunt.registerTask('default', ['test', 'publish']);
-    grunt.registerTask('publish', ['uglify', 'copy:dist', 'usebanner:dist']);
+    grunt.registerTask('publish', ['uglify', 'copy:dist', 'usebanner:dist', 'replace:dist']);
     grunt.registerTask('templates', ['includereplace', 'copy:tpl', 'clean:tpl']);
 };
