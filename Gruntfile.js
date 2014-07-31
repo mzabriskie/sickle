@@ -82,6 +82,15 @@ module.exports = function(grunt) {
 
     grunt.registerTask('test', ['templates', 'jshint', 'qunit']);
     grunt.registerTask('default', ['test', 'publish']);
-    grunt.registerTask('publish', ['uglify', 'copy:dist', 'usebanner:dist', 'replace:dist']);
+    grunt.registerTask('publish', ['uglify', 'copy:dist', 'usebanner:dist', 'replace:dist', 'syncversion']);
     grunt.registerTask('templates', ['includereplace', 'copy:tpl', 'clean:tpl']);
+
+	grunt.registerTask('syncversion', 'Sync package.json and bower.json version property', function () {
+		var pkg = grunt.file.readJSON('package.json'),
+			bower = grunt.file.readJSON('bower.json');
+
+		bower.version = pkg.version;
+
+		grunt.file.write('./bower.json', JSON.stringify(bower, null, 2));
+	});
 };
