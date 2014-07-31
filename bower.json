@@ -31,7 +31,7 @@
   "devDependencies": {
     "jquery": "~2.1.1",
     "sizzle": "~2.0.0",
-    "mootools": "https://raw.githubusercontent.com/mootools/mootools-core/master/dist/mootools-core.js",
+    "mootools": "https://github.com/mootools/mootools-core.git#be3d04548a6d8947375a37b147cc0027854b9012",
     "qunit": "~1.14.0"
   }
 }
