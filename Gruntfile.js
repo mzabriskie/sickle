@@ -5,7 +5,7 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         meta: {
-            banner: '/* <%= pkg.name %> v<%= pkg.version %> */\n'
+            banner: '/* <%= pkg.name %> v<%= pkg.version %> | (c) <%= grunt.template.today("yyyy") %> by Matt Zabriskie */\n'
         },
         jshint: {
             all: ['Gruntfile.js', 'src/sickle.js']
@@ -58,7 +58,7 @@ module.exports = function(grunt) {
                     linebreak: false
                 },
                 files: {
-                    src: ['dist/*.js']
+                    src: ['dist/sickle.min.js']
                 }
             }
         },
@@ -82,7 +82,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('test', ['templates', 'jshint', 'qunit']);
     grunt.registerTask('default', ['test', 'publish']);
-    grunt.registerTask('publish', ['uglify', 'copy:dist', 'usebanner:dist', 'replace:dist', 'syncversion']);
+    grunt.registerTask('publish', ['clean:dist', 'uglify', 'copy:dist', 'usebanner:dist', 'replace:dist', 'syncversion']);
     grunt.registerTask('templates', ['includereplace', 'copy:tpl', 'clean:tpl']);
 
 	grunt.registerTask('syncversion', 'Sync package.json and bower.json version property', function () {
